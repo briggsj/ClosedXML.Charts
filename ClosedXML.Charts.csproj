@@ -12,4 +12,8 @@
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.19.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Tests\**" />
+  </ItemGroup>
+
 </Project>
