@@ -1,36 +1,42 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
-name: .NET
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [push, pull_request]
 
 jobs:
-  build:
-
+  build-and-tests:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Install mono (for running .NET Framework tests on Linux)
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y dirmngr gnupg apt-transport-https ca-certificates
-        sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-        echo "deb https://download.mono-project.com/repo/ubuntu stable-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
-        sudo apt-get update
-        sudo apt-get install -y mono-devel
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install mono (for running .NET Framework tests on Linux)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y dirmngr gnupg apt-transport-https ca-certificates
+          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+          echo "deb https://download.mono-project.com/repo/ubuntu stable-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
+          sudo apt-get update
+          sudo apt-get install -y mono-devel
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Run tests (write TRX to TestResults directory)
+        # We ensure a TestResults folder exists and instruct dotnet test to put results there.
+        run: |
+          mkdir -p TestResults
+          dotnet test --logger "trx;LogFileName=TestResults/test_results.trx" --results-directory TestResults
+
+      - name: Upload test artifacts (Excel files + test results)
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifacts
+          path: |
+            TestResults/**
+            **/test_with_chart.xlsx
