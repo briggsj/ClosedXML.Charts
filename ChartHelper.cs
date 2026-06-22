@@ -50,13 +50,11 @@ namespace ClosedXML.Charts
                 {
                     drawingsPart = worksheetPart.AddNewPart<DrawingsPart>();
                     drawingsPart.WorksheetDrawing = new WorksheetDrawing();
-                    drawingsPart.WorksheetDrawing.Save();
-
+                    
                     // create relationship in worksheet
                     var drawings = new DocumentFormat.OpenXml.Spreadsheet.Drawing() { Id = worksheetPart.GetIdOfPart(drawingsPart) };
                     var ws = worksheetPart.Worksheet;
                     ws.Append(drawings);
-                    ws.Save();
                 }
                 else
                 {
@@ -70,28 +68,29 @@ namespace ClosedXML.Charts
                 // Add a GraphicFrame in the drawing with a ChartReference
                 var chartRelId = drawingsPart.GetIdOfPart(chartPart);
 
-                // Create a TwoCellAnchor to position the chart; coordinates are basic placeholders
+                // Create a TwoCellAnchor to position the chart
+                // Positioning from A2 to I22 (2x20 cells for a standard chart size)
                 var twoCell = new TwoCellAnchor(
-                    new DocumentFormat.OpenXml.Spreadsheet.FromMarker(
-                        new ColumnId("0"),
+                    new From(
+                        new ColumnId("1"),
                         new ColumnOffset("0"),
                         new RowId("1"),
                         new RowOffset("0")
                     ),
-                    new DocumentFormat.OpenXml.Spreadsheet.ToMarker(
-                        new ColumnId("8"),
+                    new To(
+                        new ColumnId("9"),
                         new ColumnOffset("0"),
-                        new RowId("20"),
+                        new RowId("21"),
                         new RowOffset("0")
                     ),
                     new GraphicFrame(
-                        new DocumentFormat.OpenXml.Drawing.Spreadsheet.NonVisualGraphicFrameProperties(
+                        new NonVisualGraphicFrameProperties(
                             new NonVisualDrawingProperties() { Id = (UInt32Value)2U, Name = "Chart 1" },
                             new NonVisualGraphicFrameDrawingProperties()
                         ),
-                        new DocumentFormat.OpenXml.Drawing.Spreadsheet.Transform(
+                        new Transform2D(
                             new A.Offset() { X = 0, Y = 0 },
-                            new A.Extents() { Cx = 0, Cy = 0 }
+                            new A.Extents() { Cx = 15240000, Cy = 7620000 }
                         ),
                         new A.Graphic(
                             new A.GraphicData(
