@@ -71,13 +71,13 @@ namespace ClosedXML.Charts
                 // Create a TwoCellAnchor to position the chart
                 // Positioning from A2 to I22 (2x20 cells for a standard chart size)
                 var twoCell = new TwoCellAnchor(
-                    new From(
+                    new FromMarker(
                         new ColumnId("1"),
                         new ColumnOffset("0"),
                         new RowId("1"),
                         new RowOffset("0")
                     ),
-                    new To(
+                    new ToMarker(
                         new ColumnId("9"),
                         new ColumnOffset("0"),
                         new RowId("21"),
