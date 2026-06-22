@@ -36,6 +36,9 @@ namespace ClosedXML.Charts.Tests
             var worksheetPart = (WorksheetPart)workbookPart.GetPartById(sheet.Id);
             Assert.IsNotNull(worksheetPart.DrawingsPart, "DrawingsPart should be created");
             Assert.IsTrue(worksheetPart.DrawingsPart.ChartParts.Any(), "At least one ChartPart should exist");
+
+            ms.Position = 0;
+            System.IO.File.WriteAllBytes("output.xlsx", ms.ToArray());
         }
 
         [TestMethod]
