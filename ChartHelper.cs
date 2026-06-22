@@ -88,7 +88,7 @@ namespace ClosedXML.Charts
                             new NonVisualDrawingProperties() { Id = (UInt32Value)2U, Name = "Chart 1" },
                             new NonVisualGraphicFrameDrawingProperties()
                         ),
-                        new DocumentFormat.OpenXml.Drawing.Spreadsheet.Transform2D(
+                        new A.Transform2D(
                             new A.Offset() { X = 0, Y = 0 },
                             new A.Extents() { Cx = 15240000, Cy = 7620000 }
                         ),
