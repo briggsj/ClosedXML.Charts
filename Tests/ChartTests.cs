@@ -38,7 +38,7 @@ namespace ClosedXML.Charts.Tests
             Assert.IsTrue(worksheetPart.DrawingsPart.ChartParts.Any(), "At least one ChartPart should exist");
 
             ms.Position = 0;
-            System.IO.File.WriteAllBytes("output.xlsx", ms.ToArray());
+            System.IO.File.WriteAllBytes("test_with_chart.xlsx", ms.ToArray());
         }
 
         [TestMethod]
