@@ -71,13 +71,13 @@ namespace ClosedXML.Charts
                 // Create a TwoCellAnchor to position the chart
                 // Positioning from A2 to I22 (2x20 cells for a standard chart size)
                 var twoCell = new TwoCellAnchor(
-                    new FromMarker(
+                    new DocumentFormat.OpenXml.Drawing.Spreadsheet.FromMarker(
                         new ColumnId("1"),
                         new ColumnOffset("0"),
                         new RowId("1"),
                         new RowOffset("0")
                     ),
-                    new ToMarker(
+                    new DocumentFormat.OpenXml.Drawing.Spreadsheet.ToMarker(
                         new ColumnId("9"),
                         new ColumnOffset("0"),
                         new RowId("21"),
@@ -88,7 +88,7 @@ namespace ClosedXML.Charts
                             new NonVisualDrawingProperties() { Id = (UInt32Value)2U, Name = "Chart 1" },
                             new NonVisualGraphicFrameDrawingProperties()
                         ),
-                        new Transform2D(
+                        new DocumentFormat.OpenXml.Drawing.Spreadsheet.Transform2D(
                             new A.Offset() { X = 0, Y = 0 },
                             new A.Extents() { Cx = 15240000, Cy = 7620000 }
                         ),
