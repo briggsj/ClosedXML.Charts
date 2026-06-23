@@ -22,6 +22,7 @@ namespace ClosedXML.Charts.Tests
             ws.Cell("B2").Value = 1;
             ws.Cell("A3").Value = "B";
             ws.Cell("B3").Value = 2;
+            wb.SaveAs("test_with_chart1.xlsx");
             var ms = new MemoryStream();
             wb.SaveAs(ms);
 
