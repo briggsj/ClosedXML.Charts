@@ -15,7 +15,7 @@ namespace ClosedXML.Charts.Tests
         {
             // Arrange
             var wb = new XLWorkbook();
-            var ws = wb.Worksheets.Add("Sheet1");
+            var ws = wb.Worksheets.Add("NewSheet1");
             ws.Cell("A1").Value = "Category";
             ws.Cell("B1").Value = "Value";
             ws.Cell("A2").Value = "A";
@@ -26,13 +26,13 @@ namespace ClosedXML.Charts.Tests
             wb.SaveAs(ms);
 
             // Act
-            ChartHelper.AddBarChartToWorkbookStream(ms, "Sheet1", "A2:A3", "B2:B3", "Test Chart");
+            ChartHelper.AddBarChartToWorkbookStream(ms, "NewSheet1", "A2:A3", "B2:B3", "Test Chart");
 
             // Assert
             ms.Position = 0;
             using var doc = SpreadsheetDocument.Open(ms, false);
             var workbookPart = doc.WorkbookPart;
-            var sheet = workbookPart.Workbook.Descendants<DocumentFormat.OpenXml.Spreadsheet.Sheet>().First(s => s.Name.Value == "Sheet1");
+            var sheet = workbookPart.Workbook.Descendants<DocumentFormat.OpenXml.Spreadsheet.Sheet>().First(s => s.Name.Value == "NewSheet1");
             var worksheetPart = (WorksheetPart)workbookPart.GetPartById(sheet.Id);
             Assert.IsNotNull(worksheetPart.DrawingsPart, "DrawingsPart should be created");
             Assert.IsTrue(worksheetPart.DrawingsPart.ChartParts.Any(), "At least one ChartPart should exist");
