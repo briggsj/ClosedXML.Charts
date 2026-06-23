@@ -40,3 +40,4 @@ jobs:
           path: |
             TestResults/**
             **/test_with_chart.xlsx
+            **/test_with_chart1.xlsx
